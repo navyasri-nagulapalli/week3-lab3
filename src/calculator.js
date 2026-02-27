@@ -8,6 +8,9 @@
  * - Subtraction (-)
  * - Multiplication (*)
  * - Division (/)
+ * - Modulo (%)
+ * - Exponentiation (^)
+ * - Square Root (√)
  */
 
 const readline = require('readline');
@@ -36,7 +39,25 @@ function divide(a, b) {
   return a / b;
 }
 
-module.exports = { add, subtract, multiply, divide };
+function modulo(a, b) {
+  if (b === 0) {
+    throw new Error('Cannot calculate modulo with zero');
+  }
+  return a % b;
+}
+
+function power(base, exponent) {
+  return Math.pow(base, exponent);
+}
+
+function squareRoot(n) {
+  if (n < 0) {
+    throw new Error('Cannot calculate square root of negative number');
+  }
+  return Math.sqrt(n);
+}
+
+module.exports = { add, subtract, multiply, divide, modulo, power, squareRoot };
 
 if (require.main === module) {
   function performOperation(num1, operator, num2) {
@@ -49,14 +70,18 @@ if (require.main === module) {
         return multiply(num1, num2);
       case '/':
         return divide(num1, num2);
+      case '%':
+        return modulo(num1, num2);
+      case '^':
+        return power(num1, num2);
       default:
-        throw new Error(`Invalid operator: ${operator}. Supported operators: +, -, *, /`);
+        throw new Error(`Invalid operator: ${operator}. Supported operators: +, -, *, /, %, ^`);
     }
   }
 
   function promptUser() {
     console.log('\n=== Node.js CLI Calculator ===');
-    console.log('Supported operations: + - * /\n');
+    console.log('Supported operations: + - * / % ^\n');
 
     rl.question('Enter first number: ', (input1) => {
       const num1 = parseFloat(input1);
@@ -67,8 +92,8 @@ if (require.main === module) {
         return;
       }
 
-      rl.question('Enter operator (+, -, *, /): ', (operator) => {
-        if (!['+', '-', '*', '/'].includes(operator)) {
+      rl.question('Enter operator (+, -, *, /, %, ^): ', (operator) => {
+        if (!['+', '-', '*', '/', '%', '^'].includes(operator)) {
           console.log('Error: Invalid operator');
           promptUser();
           return;
