@@ -15,6 +15,7 @@
   "license": "ISC",
   "jest": {
     "testEnvironment": "node",
+    "testMatch": ["**/*.tests.js"],
     "collectCoverageFrom": ["src/**/*.js", "!src/tests/**"]
   },
   "bugs": {
